@@ -1,3 +1,4 @@
+
 import java.math.*;
 
 public class Planet {
@@ -35,7 +36,7 @@ public class Planet {
         return G * this.mass * other.mass / (dis * dis);
     }
 
-    public double calcForceExertedByX(Planet other){
+    public double calcForceExertedByX(Planet other) {
         double dx = other.xxPos - xxPos;
         double r = calcDistance(other);
         return calcForceExertedBy(other) * dx / r;
