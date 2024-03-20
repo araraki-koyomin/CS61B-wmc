@@ -35,30 +35,16 @@ public class Planet {
         return G * this.mass * other.mass / (dis * dis);
     }
 
-    public double calcForceExertedByX(Planet other) {
-        double xDis = other.xxPos - this.xxPos;
-        double dis = calcDistance(other);
-        double force = calcForceExertedBy(other);
-        if (xDis > 0) {
-            return xDis / dis * force;
-        } else if(xDis < 0) {
-            return -(xDis / dis) * force;
-        } else {
-            return 0;
-        }
+    public double calcForceExertedByX(Planet other){
+        double dx = other.xxPos - xxPos;
+        double r = calcDistance(other);
+        return calcForceExertedBy(other) * dx / r;
     }
 
     public double calcForceExertedByY(Planet other) {
-        double yDis = other.yyPos - this.yyPos;
-        double dis = calcDistance(other);
-        double force = calcForceExertedBy(other);
-        if (yDis > 0) {
-            return yDis / dis * force;
-        } else if (yDis < 0) {
-            return -(yDis / dis) * force;
-        } else {
-            return 0;
-        }
+        double dy = other.yyPos - yyPos;
+        double r = calcDistance(other);
+        return calcForceExertedBy(other) * dy / r;
     }
 
     public boolean equals(Planet other) {
