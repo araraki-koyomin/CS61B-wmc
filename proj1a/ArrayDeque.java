@@ -1,8 +1,8 @@
 public class ArrayDeque<T> {
 
-    T[] items;
-    int size;
-    int length;
+    private T[] items;
+    private int size;
+    private int length;
 
     public ArrayDeque() {
         items = (T []) new Object[8];
@@ -19,19 +19,19 @@ public class ArrayDeque<T> {
         }
     }
 
-    public void check() {
+    private void check() {
         while (size < length  * 0.25 && length > 8) {
-            int new_len = (int)(length / 2);
-            T[] temp_items = (T []) new Object[new_len];
-            System.arraycopy(items, 0, temp_items, 0, size);
-            items = temp_items;
+            int newLen = (int) (length / 2);
+            T[] tempItems = (T []) new Object[newLen];
+            System.arraycopy(items, 0, tempItems, 0, size);
+            items = tempItems;
         }
     }
 
-    public void resise() {
-        T[] temp_items = (T []) new Object[length * 2];
-        System.arraycopy(items, 0, temp_items, 0, size);
-        items = temp_items;
+    private void resise() {
+        T[] tempItems = (T []) new Object[length * 2];
+        System.arraycopy(items, 0, tempItems, 0, size);
+        items = tempItems;
     }
     public void addFirst(T item) {
         if (size == length) {
@@ -60,7 +60,7 @@ public class ArrayDeque<T> {
         return size;
     }
 
-    public void PrintDeque() {
+    public void printDeque() {
         for (int i = 0; i < size; i++) {
             System.out.print(items[i].toString() + " ");
         }
