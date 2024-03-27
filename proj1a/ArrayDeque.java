@@ -131,8 +131,11 @@ public class ArrayDeque<T> {
      * Remove the item at the front position and return it
      */
     public T removeFirst() {
-        if (length >= 16 && size / length < 0.25) {
+        if (length >= 16 && length / size >= 4) {
             reduce();
+        }
+        if (size == 0) {
+            return null;
         }
         front = backChange(front);
         size--;
@@ -143,8 +146,11 @@ public class ArrayDeque<T> {
      * Remove the item at the rear position and return it
      */
     public T removeLast() {
-        if (length >= 16 && size / length < 0.25) {
+        if (length >= 16 && length / size >= 4) {
             reduce();
+        }
+        if (size == 0) {
+            return null;
         }
         rear = forwardChange(rear);
         size--;
@@ -155,7 +161,7 @@ public class ArrayDeque<T> {
      * Get the index-th item in deque
      */
     public T get(int index) {
-        if (index >= size) {
+        if (index >= size || index < 0) {
             return null;
         }
         int ptr = backChange(front);
