@@ -27,20 +27,19 @@ public class ArrayDeque<T> {
     public int forwardChange(int index) {
         if (index == 0) {
             return length - 1;
-        } else {
-            return index - 1;
         }
+        return index - 1;
     }
 
     /**
      * Change the ptr back
      */
     public int backChange(int index) {
+        index %= length;
         if (index == length - 1) {
             return 0;
-        } else {
-            return index + 1;
         }
+        return index + 1;
     }
 
     /**
@@ -50,9 +49,12 @@ public class ArrayDeque<T> {
         T[] newItems = (T[]) new Object[length * 2];
         int ptr = backChange(front);
         int newPtr = 0;
-        while (ptr != rear) {
-            newItems[ptr] = items[ptr];
+        boolean loop = true;
+        while (ptr != rear || loop) {
+            loop = false;
+            newItems[newPtr] = items[ptr];
             ptr = backChange(ptr);
+            newPtr++;
         }
         length *= 2;
         front = length - 1;
@@ -119,7 +121,8 @@ public class ArrayDeque<T> {
         int newPtr = 0;
         while (ptr != rear) {
             newItems[newPtr] = items[ptr];
-            ptr = backChange(front);
+            ptr = backChange(ptr);
+            newPtr++;
         }
         items = newItems;
         length /= 2;
@@ -166,118 +169,8 @@ public class ArrayDeque<T> {
         }
         int ptr = backChange(front);
         for (int i = 0; i < index; i++) {
-            ptr = backChange(front);
+            ptr = backChange(ptr);
         }
-        return items[index];
+        return items[ptr];
     }
 }
-//public class ArrayDeque<T> {
-//    private T[] items;
-//    private int size;
-//    private int length;
-//    private int front;
-//    private int rear;
-//
-//    public ArrayDeque() {
-//        items = (T[]) new Object[8];
-//        size = 0;
-//        length = 8;
-//        front = 0; // 初始化 front 为 0
-//        rear = 0; // 初始化 rear 为 0，第一个元素将置于 0 位置
-//    }
-//
-//    private int increment(int index) {
-//        return (index + 1) % length;
-//    }
-//
-//    private int decrement(int index) {
-//        return (index - 1 + length) % length;
-//    }
-//
-//    private void resize(int capacity) {
-//        T[] newItems = (T[]) new Object[capacity];
-//        for (int i = 0, j = front; i < size; i++, j = increment(j)) {
-//            newItems[i] = items[j];
-//        }
-//        items = newItems;
-//        front = 0;
-//        rear = size;
-//        length = capacity;
-//    }
-//
-//    public void addFirst(T item) {
-//        if (size == length) {
-//            resize(length * 2);
-//        }
-//        front = decrement(front);
-//        items[front] = item;
-//        size++;
-//    }
-//
-//    public void addLast(T item) {
-//        if (size == length) {
-//            resize(length * 2);
-//        }
-//        items[rear] = item;
-//        rear = increment(rear);
-//        size++;
-//    }
-//
-//    public T removeFirst() {
-//        if (isEmpty()) {
-//            return null;
-//        }
-//        T item = items[front];
-//        items[front] = null; // Help with garbage collection
-//        front = increment(front);
-//        size--;
-//
-//        if (length >= 16 && size <= length / 4) {
-//            resize(length / 2);
-//        }
-//
-//        return item;
-//    }
-//
-//    public T removeLast() {
-//        if (isEmpty()) {
-//            return null;
-//        }
-//        rear = decrement(rear);
-//        T item = items[rear];
-//        items[rear] = null; // Help with garbage collection
-//        size--;
-//
-//        if (length >= 16 && size <= length / 4) {
-//            resize(length / 2);
-//        }
-//
-//        return item;
-//    }
-//
-//    public T get(int index) {
-//        if (index < 0 || index >= size) {
-//            return null;
-//        }
-//        int actualIndex = (front + index) % length;
-//        return items[actualIndex];
-//    }
-//
-//    public boolean isEmpty() {
-//        return size == 0;
-//    }
-//
-//    public int size() {
-//        return size;
-//    }
-//
-//    // Assume printDeque doesn't need changes
-//    public void printDeque() {
-//        int ptr = front;
-//        for (int i = 0; i < size; i++) {
-//            System.out.print(items[ptr].toString() + " ");
-//            ptr = increment(ptr);
-//        }
-//        System.out.println();
-//    }
-//}
