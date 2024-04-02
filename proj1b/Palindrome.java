@@ -8,7 +8,7 @@ public class Palindrome {
         return deque;
     }
 
-    public static class ExactEqualComparator implements CharacterComparator {
+    private static class ExactEqualComparator implements CharacterComparator {
         @Override
         public boolean equalChars(char x, char y) {
             return x == y; // 返回true当且仅当x和y完全相等
